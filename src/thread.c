@@ -15,7 +15,9 @@ static void *thread_routine (void *arg) { //arg is connected fd
 	int connfd = (long int) arg;
 
 	memset(&inbuf, 0, sizeof(inbuf));
-	recv(connfd, inbuf, sizeof(inbuf), 0);
+	int recvlen=recv(connfd, inbuf, sizeof(inbuf), 0);
+	if(recvlen<=0) 
+		pthread_exit((void *) 0);
 
 	char cpy[512];
 	strcpy(cpy, inbuf);
